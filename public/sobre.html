@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Sobreee | Chumseon Space</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;1,800;1,900&family=Noto+Sans+KR:wght@300;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/sobre.css" />
+  </head>
+
+  <body data-page="sobre">
+    <!-- Estilo em css/base.css, seção 5 -->
+    <nav class="nav in" id="nav_principal" aria-label="Principal">
+      <a class="brand" href="index.html"
+        ><span class="disc" lang="ko" aria-hidden="true">춤</span
+        ><span class="word">CHUMSEON<small>SPACE</small></span></a
+      >
+      <div class="links" id="div_links"></div>
+      <div class="acts">
+        <span class="d" id="span_acoes"></span
+        ><button
+          class="ibtn"
+          id="btn_tema"
+          onclick="trocarTema()"
+          aria-label="Alternar tema claro e escuro"
+        ></button>
+      </div>
+      <button
+        class="ibtn burger"
+        id="btn_menu"
+        onclick="abrirMenu()"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+      >
+        &#9776;
+      </button>
+    </nav>
+
+    <main>
+      <div class="sobre">
+        <header class="hero2">
+          <div class="ko in" lang="ko" aria-hidden="true">춤선</div>
+          <div>
+            <h1 class="in" style="--d: 0.2s">Por que a dança?</h1>
+            <p class="lead in" style="--d: 0.35s">
+              A escolha do tema veio pelo significado que tem na minha vida e de
+              querer manter isso vivo e me sentir bem.
+            </p>
+          </div>
+        </header>
+
+        <div class="cols">
+          <section class="panel in" style="--d: 0.55s">
+            <h2>O que significa 춤선</h2>
+            <p class="nome-ko" lang="ko">춤선 <small>chumseon</small></p>
+            <p>
+              Em coreano, 춤 (chum) é <b>dança</b> e 선 (seon) é <b>linha</b>.
+              춤선 é a linha do corpo ao dançar: é a estética do movimento,
+              seria a maneira única como cada corpo desenha no espaço.
+            </p>
+            <p>
+              Ballet dá precisão, o hip-hop dá impacto e o contemporâneo dá
+              fluidez. Cada estilo desenha a sua linha, e por isso cada um tem a
+              sua cor no site.
+            </p>
+          </section>
+
+          <section class="panel in" style="--d: 0.45s">
+            <h2>Por que escolhi este tema</h2>
+            <p>
+              Escolhi esse tema porque percebi que a dança me comove e me faz
+              voltar a sentir quem eu sou, voltar a sentir paixão por algo. Hoje
+              em dia, em pensar na dança contemporânea, e como ela se move e
+              impacta aa minha vida, me faz perceber que estou viva.
+            </p>
+            <p>
+              Cresci com a dança na minha vida desde pequena e continua vivo
+              essa paixão desde então.
+            </p>
+            <p class="edite">
+              <b>Valores que representam a dança pra mim: <br /></b> Conforto e
+              refúgio, onde representam paz e relaxamento, algo que me motiva a
+              continuar.
+            </p>
+          </section>
+
+          <section class="panel in" style="--d: 0.65s">
+            <h2>O que é a Dança</h2>
+            <p>
+              Dança é considerado arte de movimentar o corpo, seguindo ritmos e
+              compassos, é uma forme de expressar emoções, culturas, ideias etc.
+              A dança está presente em músicas ou de forma livre, independente
+              de sons.
+            </p>
+            <p>
+              Podemos considerar 3 pilares principais: corpo, espaço e tempo.
+              Que representam os gestos, os deslocamento por onde o corpo se
+              move e a cadencia dos movimentos em relação a batida.
+            </p>
+          </section>
+
+          <section class="panel panel-centro in" style="--d:.75s">
+            <h2>Agradecimentos</h2>
+            <p class="edite">
+            </p>
+              <b>Minha mamãe:</b> ela que me deu a vida primeiramente, ela me matriculou na minha escola onde eu fazia as aulas de dança frequentemente, ela me apoiou também durante as aulas, sempre ia para apresentações, então é uma pessoa que não pode ficar de fora. <br> <br>
+              <b>Meu primo:</b> ele me apresentou a faculdade, ele me ajudou em alguns coisas, sempre me apoia em continuar, foi uma das principais pessoas que me fez vir pra SPTech. <br><br>
+              <b>Minhã irmã:</b> ela foi uma parceria da dança desde sempre, sempre esteve comigo nas danças, tanto em casa, quanto pra ensaiar e ir fazer aulas ou aprender sozinhas, sempre nos apoiamos. <br><br>
+              <b>Minha amiga:</b> ela também foi minha parceria de dança, fizemos uma coreografia em dupla e apresentamos em um teatro, além de termos feito nosso ‘tcc’  do terceiro médio sobre a dança contemporânea e o hiphop no mundo do kpop e como poderíamos misturar os dois.<br><br>
+              <b>Artistas:</b> são pessoas que me inspiram, que infelizmente eu não conheço, mas me faz querer aprender mais, que são os artistas que eu amo assistir dançando, aprender as danças e analisar cada passo e história. <br> <br>
+              <b>Meu amigos/colegas:</b> se não fosse por alguns colegas da faculdade, eu não teria conseguido ver aonde eu estou, ter continuado com projetos ou me encaixar.<br>
+            </p>
+          </section>
+        </div>
+
+        <!-- LINHA DO TEMPO: montada por js/sobre.js (desenharEtapas) com um vetor e um for -->
+        <!-- <h2 class="t in" style="--d: 0.2s; margin-top: 56px">
+          Como o site foi construído
+        </h2>
+        <ol class="etapas" id="div_etapas"></ol>
+      </div>
+    </main> -->
+
+    <footer>
+      <span>© 2026 Chumseon Space</span><span>Projeto Individual SPTech</span>
+    </footer>
+    <div class="toast" id="div_aviso" role="status"></div>
+
+    <!-- JS (a ordem importa): dados.js -> app.js -> arquivo da página (que chama iniciarPagina no final) -->
+    <script src="js/dados.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/sobre.js"></script>
+  </body>
+</html>

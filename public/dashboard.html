@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Dashboard | Chumseon Space</title>
+    <!-- Fontes do Google: Montserrat (textos e títulos) e Noto Sans KR (as letras coreanas 춤선) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;1,800;1,900&family=Noto+Sans+KR:wght@300;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Biblioteca de gráficos Chart.js (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+    <!-- CSS: base.css vale para todas as páginas; o segundo é só desta página -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+  </head>
+  <!-- data-page diz ao CSS e ao js/app.js em qual página estamos -->
+  <body data-page="dashboard">
+    <!--
+  dashboard.html  |  PAINEL (só para quem fez login: o js/dashboard.js manda para login.html se não houver sessão). Cada KPI/gráfico vem de um SELECT de banco/chumseon_space.sql
+  CSS: css/base.css + css/dashboard.css
+  JS : js/dados.js + js/app.js + js/dashboard.js
+  Os gráficos usam a biblioteca Chart.js (carregada no <head> abaixo, precisa de internet)
+-->
+    <!-- NAVBAR: os links e botões de conta são montados pelo js/app.js (função montarNavbar). Estilo em css/base.css, seção 5 -->
+    <nav class="nav in" id="nav_principal" aria-label="Principal">
+      <a class="brand" href="index.html"
+        ><span class="disc" lang="ko" aria-hidden="true">춤</span
+        ><span class="word">CHUMSEON<small>SPACE</small></span></a
+      >
+      <div class="links" id="div_links"></div>
+      <div class="acts">
+        <span class="d" id="span_acoes"></span
+        ><button
+          class="ibtn"
+          id="btn_tema"
+          onclick="trocarTema()"
+          aria-label="Alternar tema claro e escuro"
+        ></button>
+      </div>
+      <button
+        class="ibtn burger"
+        id="btn_menu"
+        onclick="abrirMenu()"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+      >
+        &#9776;
+      </button>
+    </nav>
+
+    <main>
+      <div class="dash">
+        <h1 id="titulo_painel">Painel da comunidade</h1>
+        <p class="sub" id="p_subtitulo"></p>
+        <!-- MEU PAINEL: tudo aqui muda quando o usuário ensaia, ou assiste vídeo (js/dashboard.js, função atualizarPainel) -->
+        <div class="mine">
+          <div class="bar2">
+            <span>Mostrar os últimos</span>
+            <div class="tabs" id="div_periodo" style="margin: 0"></div>
+          </div>
+          <div class="grid2">
+            <div class="cbox">
+              <h3>Cronômetro de ensaio</h3>
+              <p>
+                Dance e registre o tempo. Ao terminar, os minutos entram no seu
+                painel.
+              </p>
+              <div class="timer" id="div_cronometro">00:00</div>
+              <div class="row">
+                <button
+                  class="pill solid"
+                  id="btn_cronometro"
+                  onclick="alternarCronometro()"
+                >
+                  Começar ensaio</button
+                ><button
+                  class="pill"
+                  onclick="
+                    adicionarEnsaio(15, '+15 minutos de ensaio registrados.')
+                  "
+                >
+                  +15 min</button
+                ><button
+                  class="pill"
+                  onclick="
+                    adicionarEnsaio(30, '+30 minutos de ensaio registrados.')
+                  "
+                >
+                  +30 min
+                </button>
+              </div>
+            </div>
+            <div class="cbox">
+              <h3>Meta da semana</h3>
+              <p id="p_meta_texto"></p>
+              <div class="goal"><i id="barra_meta"></i></div>
+              <p id="p_meta_msg" style="margin: 0"></p>
+            </div>
+          </div>
+          <div class="kpis">
+            <div class="kpi">
+              <span>Minutos de ensaio</span><b id="kpi_minutos">0 min</b>
+            </div>
+            <div class="kpi">
+              <span>Vídeos assistidos</span><b id="kpi_videos">0</b>
+            </div>
+          </div>
+          <p class="hint" id="p_vazio" hidden>
+            Nada registrado neste período ainda. Ensaie ou assista a um vídeo
+            para ver o painel mudar.
+          </p>
+          <div class="charts">
+            <div class="cbox w">
+              <h3>Meu tempo de ensaio</h3>
+              <p>Minutos por dia</p>
+              <div class="cv"><canvas id="canvas_ensaio"></canvas></div>
+            </div>
+            <div class="cbox">
+              <h3>Vídeos que assisti</h3>
+              <p>Por estilo</p>
+              <div class="cv"><canvas id="canvas_videos"></canvas></div>
+            </div>
+          </div>
+        </div>
+        <!-- COMUNIDADE: números e gráficos com os dados de todos os usuários cadastrados -->
+        <h2 class="t" style="font-size: 28px; margin: 48px 0 18px">
+          A comunidade
+        </h2>
+        <div class="kpis">
+          <div class="kpi">
+            <span>Dançarinos cadastrados</span><b id="kpi_usuarios">0</b>
+          </div>
+          <div class="kpi">
+            <span>Estilo mais votado da semana</span
+            ><b id="kpi_estilo_top">-</b>
+          </div>
+          <div class="kpi">
+            <span>Querem retomar a dança</span><b id="kpi_retomar">0%</b>
+          </div>
+        </div>
+        <p class="err" id="p_erro_graficos" hidden>
+          Os gráficos não carregaram. Verifique a conexão com a internet.
+        </p>
+        <div class="charts">
+          <div class="cbox">
+            <h3>A distribuição das linhas</h3>
+            <p>Estilos favoritos da comunidade</p>
+            <div class="cv"><canvas id="canvas_estilos"></canvas></div>
+          </div>
+          <div class="cbox">
+            <h3>O que move os corpos?</h3>
+            <p>O que a dança representa para cada pessoa</p>
+            <div class="cv"><canvas id="canvas_sentidos"></canvas></div>
+          </div>
+          <div class="cbox w">
+            <h3>Nível de experiência</h3>
+            <p>
+              Quem já dançou, quem dança hoje e quem está começando, por estilo
+            </p>
+            <div class="cv"><canvas id="canvas_niveis"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <span>© 2026 Chumseon Space</span><span>Projeto Individual SPTech</span>
+    </footer>
+    <div class="toast" id="div_aviso" role="status"></div>
+
+    <!-- JS (a ordem importa): dados.js -> app.js -> arquivo da página (que chama iniciarPagina no final) -->
+    <script src="js/dados.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

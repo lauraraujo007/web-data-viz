@@ -1,28 +1,40 @@
-var database = require("../database/config")
+var database = require("../database/config");
 
+// Login: acha o usuário pelo e-mail e senha.
+// Junta com estilo (nome do estilo favorito) e com perfil_usuario (1:1, meta semanal).
 function autenticar(email, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
     var instrucaoSql = `
-        SELECT id, nome, email, fk_empresa as empresaId FROM usuario WHERE email = '${email}' AND senha = '${senha}';
+        SELECT u.idUsuario, u.nome, u.email, e.codigo AS estilo, p.metaSemanalMin AS meta
+        FROM usuario u
+        JOIN estilo e ON e.idEstilo = u.fkEstilo
+        JOIN perfil_usuario p ON p.idUsuario = u.idUsuario
+        WHERE u.email = ? AND u.senha = ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [email, senha]);
 }
 
-// Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
-function cadastrar(nome, email, senha, fkEmpresa) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, email, senha, fkEmpresa);
-    
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-    var instrucaoSql = `
-        INSERT INTO usuario (nome, email, senha, fk_empresa) VALUES ('${nome}', '${email}', '${senha}', '${fkEmpresa}');
-    `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+// Antes de cadastrar, confere se o e-mail já existe
+function buscarPorEmail(email) {
+    var instrucaoSql = `SELECT idUsuario FROM usuario WHERE email = ?;`;
+    return database.executar(instrucaoSql, [email]);
 }
 
-module.exports = {
-    autenticar,
-    cadastrar
-};
+// INSERT em usuario. O site manda o "codigo" do estilo/tempo/sentido (ex.: 'kpop'),
+// e o SELECT troca cada código pelo id certo (chave estrangeira).
+function cadastrar(nome, email, senha, estilo, tempo, sentido) {
+    var instrucaoSql = `
+        INSERT INTO usuario (nome, email, senha, fkEstilo, fkTempo, fkSentido)
+        SELECT ?, ?, ?, e.idEstilo, t.idTempo, s.idSentido
+        FROM estilo e, tempo_pratica t, sentido s
+        WHERE e.codigo = ? AND t.codigo = ? AND s.codigo = ?;
+    `;
+    return database.executar(instrucaoSql, [nome, email, senha, estilo, tempo, sentido]);
+}
+
+// INSERT em perfil_usuario (1:1): o id do perfil é o mesmo id do usuário
+function criarPerfil(idUsuario) {
+    var instrucaoSql = `INSERT INTO perfil_usuario (idUsuario) VALUES (?);`;
+    return database.executar(instrucaoSql, [idUsuario]);
+}
+
+module.exports = { autenticar, buscarPorEmail, cadastrar, criarPerfil };

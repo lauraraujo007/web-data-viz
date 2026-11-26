@@ -1,105 +1,59 @@
-<img src="https://user-images.githubusercontent.com/46379117/192358781-9ca879e4-e55e-4d0d-b876-f9a4a2ed9ae8.png" width="600px">
+# Chumseon Space
 
-_Web Data Visualization = Visualização de Dados na Web_
+Site de dança com **Node.js + Express + MySQL** no servidor e HTML/CSS/JS puro no navegador.
+Projeto independente: tem o próprio banco (`chumseon_space`) e não depende de nenhum outro projeto.
 
-_Implementação de Referência para o seu Projeto de Primeiro Semestre_
+## Rodar em outro computador
 
-<hr>
+1. Instale o **Node.js** e o **MySQL** (e o MySQL Workbench, se quiser).
+2. No MySQL deste computador, execute o arquivo `src/database/chumseon_space.sql` inteiro.
+   > Atenção: ele faz `DROP DATABASE IF EXISTS chumseon_space` e recria o banco do zero.
+3. Na pasta do projeto:
+   ```
+   npm install
+   ```
+4. Copie `.env.exemplo` para `.env.dev` e preencha `DB_USER`, `DB_PASSWORD` e `DB_PORT`
+   com os dados do MySQL **deste** computador (o `.env.dev` não vai para o git).
+5. Confira tudo de uma vez (conexão, banco, tabelas, cadastro de teste):
+   ```
+   node diagnostico.js
+   ```
+6. Ligue o servidor:
+   ```
+   node app.js
+   ```
+7. Acesse **http://localhost:3333**. Conta de teste: `demo@chumseon.space` / `123456`.
+   De outro aparelho, use `http://IP-DO-COMPUTADOR:3333` (libere a porta 3333 no firewall).
 
-# Como usar
+> Abra o site sempre pelo endereço do `node` (porta 3333), e não pelo Live Server: é o `app.js` que entrega as páginas e a API juntos.
 
-1. Clone este repositório em sua máquina.
+## Se o cadastro der erro
 
+A mensagem aparece em vermelho embaixo do formulário e diz o que conferir. Rode `node diagnostico.js`
+na pasta do projeto: ele para no primeiro problema e explica como resolver.
 
-1. Crie, no Banco de Dados, as tabelas necessárias para o funcionamento deste projeto.
-- Siga as instruções no arquivo **/src/database/script-tabelas.sql**
-
-
-3. Acesse o arquivo **app.js** e parametrize o ambiente.
-- Se você estiver utilizando o Ambiente de Produção (remoto), comente a linha 2 e deixe habilitada a linha 1 onde está o valor **var ambiente_processo = 'producao';**
-- Se você estiver utilizando o Ambiente de Desenvolvimento (local), comente a linha 1 e deixe habilitada a linha 2 onde está o valor **var ambiente_processo = 'desenvolvimento';**
-
-4. Adicione as credenciais de Banco de Dados no arquivo **.env** ou em **.env.dev**, seguindo as instruções neste.
-
-5. Acesse este repositório no seu terminal (GitBash ou VSCode) e execute os comandos abaixo:
+## Estrutura
 
 ```
-npm i
-``` 
-_O comando acima irá instalar as bibliotecas necessárias para o funcionamento do projeto. As bibliotecas a serem instaladas estão listadas no arquivo **package.json** então é muito importante que este não seja alterado. Será criada uma nova pasta/diretório chamado **node_modules** quando o comando for finalizado, que é onde as bibliotecas estão localizadas. Não altere a pasta/diretório._
-
+app.js                    liga o servidor, as rotas e a pasta public
+diagnostico.js            confere .env.dev, MySQL, banco, tabelas e o INSERT do cadastro
+.env.exemplo              modelo do .env.dev (cada computador cria o seu)
+public/                   o site (html, css, js, img)
+src/
+├── database/             config.js (executar) e chumseon_space.sql
+├── routes/               URL + método -> controller
+├── controllers/          valida o que chegou e responde (400, 403, 409, 500...)
+└── models/               os SQLs (SELECT/INSERT) com "?" nos valores
 ```
-npm start
-``` 
 
-_O comando acima irá iniciar seu projeto e efetuar os comandos de acordo com a sua parametrização feita nos passos anteriores._
+## Rotas da API
 
-6. Para "ver" seu projeto funcionando, acesse em seu navegador o caminho **informado no terminal**.
-
-7. Caso queira parar a execução, tecle **CTRL+C** no terminal em que o projeto está rodando.
-
-## Adicionar novo recurso ao projeto
-
-**"Recurso? O que é?"** Enquanto no Banco de Dados chamamos as tabelas de "entidades", quando tratamos de desenvolvimento WEB usamos a palavra "recurso" para se referir a algo que podemos criar, ler, atualizar ou deletar [1]. Estas ações são conhecidas como CRUD: Create, Read, Update e Delete. Para acessar cada ação, usamos os métodos HTTP: POST, GET, PUT e DELETE [2]. (Há outros verbos, porém com estes já conseguimos efetuar CRUDs). 
-
-**Tabela para ajudar a fazer a associação**
-
-<table>
-  <tr>
-    <th>C.R.U.D</th>
-    <th>Ação</th>
-    <th>Tradução</th>
-    <th>Verbo HTTP *</th>
-    <th>Comando BD</th>
-  </tr>
-  <tr>
-    <td>C</td>
-    <td>Create</td>
-    <td>Criar</td>
-    <td>POST</td>
-    <td>INSERT</td>
-  </tr>
-  <tr>
-    <td>R</td>
-    <td>Read</td>
-    <td>Ler</td>
-    <td>GET</td>
-    <td>SELECT</td>
-  </tr>
-  <tr>
-    <td>U</td>
-    <td>Update</td>
-    <td>Atualizar</td>
-    <td>PUT</td>
-    <td>UPDATE</td>
-  </tr>
-  <tr>
-    <td>D</td>
-    <td>Delete</td>
-    <td>Deletar</td>
-    <td>DELETE</td>
-    <td>DELETE</td>
-  </tr>
-</table>
-
-_* Você verá o verbo HTTP sendo apontado nos arquivos em /routes_
-
-**"E no meu projeto, o que seria um recurso?"** Em web-data-viz manipulamos os recursos **usuário**, **aviso** e **medida**. Podemos conferir isso vendo para quais entidades foram criados os caminhos de inserção e captura de dados, que envolve os diretórios **routes**, **controllers** e **models**.
-
-Abaixo, uma figura que ajuda a compreender o caminho percorrido para, por exemplo, efetuar o cadastro de um usuário:
-
-
-![image](https://github.com/user-attachments/assets/d576f178-0da6-437e-b5c9-658e3ebaf6ca)
-
-
-
-**Entendi o que é um recurso e gostaria de adicionar um novo ao meu projeto! Como faz?**  
-- Primeiro, crie a tabela no Banco de Dados referente a este recurso. Exemplos de recursos comuns de serem adicionados ao projeto no primeiro semestre: Silo, Aquário, Sala, Andar, Endereço, Mercado, Prateleira, Unidade, Carro, Caminhão...  
-- Assim que criada a tabela, faça todo o caminho de **front-end → routes → controllers → models** replicando o que já existe!  
-- Exemplo, se você quiser a funcionalidade de adicionar um novo Aquário, deve criar arquivos referentes ao aquario nos diretórios e replicar também as funções.  
-- Dica: A implementação de AVISO já contém o CRUD completo! :wink:
- 
-### Fontes bibliográficas
-
-[1] https://datatracker.ietf.org/doc/html/rfc2396  
-[2] https://datatracker.ietf.org/doc/html/rfc7231
+| Método | URL | O que faz |
+|---|---|---|
+| POST | /usuarios/cadastrar | INSERT em `usuario` e `perfil_usuario` (409 se o e-mail já existe) |
+| POST | /usuarios/autenticar | SELECT do login (403 se errar e-mail/senha) |
+| GET | /dashboard/comunidade | KPIs e gráficos da comunidade |
+| GET | /dashboard/pessoal/:idUsuario/:periodo | KPIs e gráficos pessoais (periodo = 7 ou 30 dias) |
+| POST | /ensaios/registrar | INSERT em `ensaio` |
+| POST | /videos/assistir | INSERT na tabela N:N `usuario_video` |
+| POST | /quiz/registrar | INSERT em `tentativa_quiz` |

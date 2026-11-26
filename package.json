@@ -1,20 +1,16 @@
 {
-  "name": "web-data-viz",
+  "name": "chumseon-space",
   "version": "1.0.0",
-  "description": "",
+  "description": "Chumseon Space - comunidade de dança (Node + Express + MySQL)",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon --exec node app.js"
+    "start": "node app.js"
   },
-  "author": "Feito pelos desenvolvedores @ São Paulo Tech School / Bandtec Digital School",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.17.1",
-    "mysql2": "^3.9.4",
-    "nodemon": "^2.0.7",
-    "path": "^0.12.7"
+    "express": "^4.19.2",
+    "mysql2": "^3.9.7"
   }
 }

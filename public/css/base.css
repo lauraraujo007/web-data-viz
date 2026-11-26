@@ -1,0 +1,516 @@
+/* ==========================================================================
+   base.css  |  estilos COMPARTILHADOS por todas as páginas
+   Usado em: index.html, cadastro.html, login.html e dashboard.html
+   (cada página carrega este arquivo primeiro e depois o seu CSS próprio)
+   Tem: cores e tema, animações, preloader, navbar, botões, abas,
+        formulários (chips), toast (aviso) e rodapé.
+   DICA: para trocar a cor de destaque do site, mude --accent na seção 1.
+   ========================================================================== */
+
+/* 1. VARIÁVEIS: cores, fontes e tema claro/escuro.
+      O js/app.js troca o atributo data-theme da tag <html> ("dark" ou "light"),
+      e é isso que ativa o bloco :root[data-theme=light] mais abaixo. */
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #8b7bff;
+}
+:root {
+  --accent: #8b7bff;
+  transition: --accent 0.7s;
+  --f: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --k: "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --onac: #120f2a;
+  --page: #101315;
+  --stage: #272b2e;
+  --panel: #171b1e;
+  --line: rgba(255, 255, 255, 0.12);
+  --text: #c9cfd3;
+  --muted: #8e979d;
+  --hi: #fff;
+  --outline: rgba(255, 255, 255, 0.28);
+  --vig: 10, 12, 13;
+  color-scheme: dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+:root[data-theme="light"] {
+  --page: #f3f2f6;
+  --stage: #e4e2ec;
+  --panel: #fff;
+  --line: rgba(20, 18, 40, 0.14);
+  --text: #363a40;
+  --muted: #666d75;
+  --hi: #14121f;
+  --outline: rgba(20, 18, 40, 0.28);
+  --vig: 243, 242, 246;
+  color-scheme: light;
+}
+
+/* 2. BASE: regras gerais de reset e de elementos comuns */
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+  scroll-behavior: smooth;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font: 400 16px/1.6 var(--f);
+  overflow-x: hidden;
+  transition:
+    background 0.5s,
+    color 0.5s;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  font-family: inherit;
+}
+[hidden] {
+  display: none !important;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* 3. ANIMAÇÕES
+      A classe .in (usada nos HTMLs) faz o elemento subir e aparecer.
+      A classe .rdy é colocada no <body> pelo js/app.js quando o preloader termina. */
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(-46%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+body:not(.rdy) .in {
+  opacity: 0;
+}
+.rdy .in {
+  animation: up 0.9s var(--d, 0s) both;
+}
+
+/* PRELOADER: tela de abertura */
+
+#pre {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--page);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  transition:
+    opacity 0.7s,
+    visibility 0.7s;
+}
+#pre.done {
+  opacity: 0;
+  visibility: hidden;
+}
+#pre svg {
+  width: min(70vw, 320px);
+}
+#pre text {
+  font: 700 110px var(--k);
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: draw 2.2s ease forwards;
+}
+#pre .bar {
+  width: min(60vw, 240px);
+  height: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+#pre .bar i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+#pre p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.4em;
+  color: var(--muted);
+}
+
+/* 5. NAVBAR e BOTÕES: <nav class="nav"> aparece em todas as páginas.
+      Os links são criados pela função navr() do js/app.js.
+      A navbar da home "entra" no hero porque tem margem negativa (linha abaixo). */
+.nav {
+  position: relative;
+  z-index: 6;
+  max-width: 1280px;
+  width: calc(100% - 28px);
+  margin: 14px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 30px;
+}
+[data-page="home"] .nav {
+  margin-bottom: -92px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.disc {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--line);
+  display: grid;
+  place-items: center;
+  font: 700 22px var(--k);
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent);
+}
+.word {
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  font-size: 15px;
+  line-height: 1.1;
+  color: var(--hi);
+}
+.word small {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  color: var(--muted);
+  margin-top: 3px;
+}
+.links {
+  display: flex;
+  gap: 28px;
+  margin: 0 auto;
+  font-size: 14px;
+  font-weight: 500;
+}
+.links a {
+  position: relative;
+  padding: 6px 0;
+  color: var(--text);
+  transition: color 0.2s;
+}
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.links a:hover::after,
+.links a.on::after {
+  transform: scaleX(1);
+}
+.links a:hover {
+  color: var(--hi);
+}
+.acts {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+}
+.ibtn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--hi);
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.25s;
+}
+.ibtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.pill {
+  display: inline-block;
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  padding: 10px 22px;
+  font: 600 14px var(--f);
+  transition: 0.25s;
+  cursor: pointer;
+  background: transparent;
+  color: var(--hi);
+}
+.pill:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--onac);
+}
+.pill.solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--onac);
+}
+.pill.solid:hover {
+  background: var(--hi);
+  border-color: var(--hi);
+  color: var(--page);
+}
+.burger {
+  display: none;
+}
+.m {
+  display: none;
+}
+.acts .d {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* 6. COMPONENTES COMPARTILHADOS */
+/* linha de botões (hero e cronômetro usam) */
+.row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+/* título de seção (h2 class="t") */
+h2.t {
+  font: italic 800 clamp(28px, 4vw, 44px)/1.1 var(--f);
+  margin: 0 0 8px;
+  color: var(--hi);
+  letter-spacing: -0.01em;
+}
+/* abas/botões de filtro (abas de estilo na home e filtro 7/30 dias no dashboard) */
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.tab {
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font: 500 14px var(--f);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.tab[aria-selected="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--onac);
+  font-weight: 600;
+}
+/* painel (cartão de formulário; usado em cadastro e login) */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+}
+
+.panel2 {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 28px;
+}
+/* campos de escolha em formato de "chips" (cadastro) + mensagens de erro/dica */
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 0 18px;
+}
+legend {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--hi);
+  margin-bottom: 8px;
+  padding: 0;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  position: relative;
+}
+.chip input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  cursor: pointer;
+}
+.chip span {
+  display: block;
+  padding: 8px 15px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  transition: 0.2s;
+}
+.chip:hover span {
+  border-color: var(--accent);
+}
+.chip input:checked + span {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--onac);
+  font-weight: 600;
+}
+.chip input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+.err {
+  min-height: 22px;
+  margin: 0 0 10px;
+  color: #ff6b7a;
+  font-size: 14px;
+}
+.hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 16px 0 0;
+}
+.hint a {
+  color: var(--hi);
+  border-bottom: 1px solid var(--accent);
+}
+/* toast: aviso que aparece embaixo da tela (<div id="toast"> e função toast() do js/app.js) */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  transform: translate(-50%, 30px);
+  opacity: 0;
+  pointer-events: none;
+  background: var(--hi);
+  color: var(--page);
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.4s;
+  z-index: 90;
+  max-width: 90vw;
+  text-align: center;
+}
+.toast.on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* rodapé */
+footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 40px 24px 50px;
+  max-width: 1240px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* 7. RESPONSIVO: celular (navbar vira menu hambúrguer) */
+@media (max-width: 900px) {
+  .links,
+  .acts .d {
+    display: none !important;
+  }
+  .burger {
+    display: block;
+    margin-left: auto;
+  }
+  .acts {
+    margin-left: auto;
+  }
+  .burger {
+    margin-left: 0;
+  }
+  .nav.open .links {
+    display: flex;
+    position: absolute;
+    top: 84px;
+    left: 16px;
+    right: 16px;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    border-radius: 20px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    z-index: 9;
+  }
+  .nav.open .links a {
+    padding: 12px 0;
+    font-size: 17px;
+  }
+  .nav.open .m {
+    display: block;
+  }
+}
+
+/* 8. ACESSIBILIDADE: quem prefere menos movimento no sistema vê as animações reduzidas */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .lines path {
+    stroke-dashoffset: 0;
+  }
+}

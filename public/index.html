@@ -1,81 +1,481 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="pt-BR" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Chumseon Space</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;1,800;1,900&family=Noto+Sans+KR:wght@300;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <title>AquaTech | Página Inicial</title>
+    <!-- CSS: base.css vale para todas as páginas; o segundo é só desta página -->
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/home.css" />
+  </head>
 
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-</head>
-
-<body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
+  <body data-page="home">
+    <!-- PRELOADER -->
+    <div id="pre" aria-hidden="true">
+      <svg viewBox="0 0 300 130">
+        <text x="150" y="105" text-anchor="middle" lang="ko">춤선</text>
+      </svg>
+      <div class="bar">
+        <i id="pre_barra"></i>
       </div>
+      <p>CHUMSEON <span id="pre_pct">0</span>%</p>
     </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
+
+    <nav class="nav in" id="nav_principal" aria-label="Principal">
+      <a class="brand" href="index.html">
+        <span class="disc" lang="ko" aria-hidden="true">춤</span>
+        <span class="word">CHUMSEON<small>SPACE</small></span>
+      </a>
+
+      <div class="links" id="div_links"></div>
+
+      <div class="acts">
+        <span class="d" id="span_acoes"></span>
+        <button
+          class="ibtn"
+          id="btn_tema"
+          onclick="trocarTema()"
+          aria-label="Alternar tema claro e escuro"
+        ></button>
       </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
+
+      <button
+        class="ibtn burger"
+        id="btn_menu"
+        onclick="abrirMenu()"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+      >
+        &#9776;
+      </button>
+    </nav>
+
+    <main>
+      <!-- HERO: estilos em css/home.css (.stage, .mark, .lines, .hero). As linhas animadas são o <svg class="lines"> -->
+      <header class="stage">
+        <div
+          class="mark"
+          lang="ko"
+          data-t="춤선"
+          role="img"
+          aria-label="춤선, as linhas do corpo ao dançar"
+        >
+          춤선
+        </div>
+        <svg
+          class="lines"
+          viewBox="0 0 1200 800"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            pathLength="1"
+            d="M-20 560 C 220 380, 380 700, 640 470 S 1000 220, 1230 300"
+          />
+          <path
+            pathLength="1"
+            d="M-20 620 C 260 520, 420 760, 700 560 S 1020 330, 1230 400"
+          />
+          <path
+            pathLength="1"
+            d="M520 820 C 600 600, 760 520, 860 300 S 1000 120, 1100 60"
+          />
+        </svg>
+        <div class="hero">
+          <h1 class="in" style="--d: 0.4s">Dance com a linha do seu corpo</h1>
+          <p class="in" style="--d: 0.55s">
+            <b>춤선</b> é a silhueta que o corpo desenha no espaço através do
+            movimento. Ballet, hip-hop e contemporâneo dão a ela precisão,
+            impacto e fluidez.
+          </p>
+          <div class="row in" style="--d: 0.7s">
+            <a class="pill solid" href="cadastro.html">Criar minha conta</a
+            ><a class="pill" href="#estilos">Conhecer os estilos</a>
           </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
+          <!-- ENERGIA DO DIA: os botões são criados pelo js/home.js (desenharEnergias) dentro de div_energias -->
+          <div class="vibes in" style="--d: 0.85s">
+            <h2 id="titulo_energia">Qual é a sua energia hoje?</h2>
+            <div
+              class="vchips"
+              id="div_energias"
+              role="group"
+              aria-labelledby="titulo_energia"
+            ></div>
+            <p class="sug" id="p_sugestao" aria-live="polite">
+              
+            </p>
           </div>
         </div>
-      </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
-      </div>
-    </div>
-  </body>
+        <div class="cap in" style="--d: 1s">
+          “as linhas do corpo ao dançar”: a estética do movimento
+        </div>
+        <div class="big in" style="--d: 0.9s" aria-hidden="true">CHUMSEON</div>
+      </header>
 
+      <div class="wrap">
+        <!-- CARDS DOS ESTILOS: .sc em css/home.css; o onclick chama escolherEstiloCard() do js/home.js -->
+        <section id="estilos">
+          <div class="head">
+            <div><h2 class="t">As linhas que você pode desenhar</h2></div>
+            <br>
+            <p>
+              Cada estilo trabalha a linha do corpo de um jeito                  
+          </div>
+          <div class="cards">
+            <button
+              class="sc"
+              onclick="escolherEstiloCard('ballet')"
+              style="--c: #8b7bff"
+            >
+            <img class="foto foto-ballet" src="img/ballet.jpg" alt="ballet" loading="lazy">
+              
+              <h3>Ballet clássico</h3>
+              <p>A base da linha: precisão, postura e geometria do corpo.</p>
+              <span class="link">Ver dicas</span>
+            </button>
+            <button
+              class="sc"
+              onclick="escolherEstiloCard('hiphop')"
+              style="--c: #ff6a4d"
+            >
+            <img class="foto foto-hiphop" src="img/hiphop.jpg" alt="hiphop" loading="lazy">
+              <h3>Hip-hop e danças urbanas</h3>
+              <p>A quebra da linha: peso, energia, impacto e isolamentos.</p>
+              <span class="link">Ver dicas</span>
+            </button>
+            <button
+              class="sc"
+              onclick="escolherEstiloCard('contemporaneo')"
+              style="--c: #3fd6c0"
+            >
+            <img class="foto foto-contemporaneo" src="img/contemporaneo.jpg" alt="contemporaneo" loading="lazy">
+              <h3>Dança contemporânea</h3>
+              <p>A fluidez da linha: gravidade, respiração e liberdade.</p>
+              <span class="link">Ver dicas</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- DICAS EM VÍDEO: as abas e os vídeos ficam aqui no HTML. O js/home.js só mostra o grupo do estilo escolhido (função desenharVideos).
+             Para cada vídeo, preencha o href (link do YouTube) e o src da imagem (capa). -->
+        <section id="dicas">
+          <div class="head">
+            <div><h2 class="t">Dicas em vídeo</h2></div>
+            <p id="p_dica_estilo">Escolha um estilo para ver os vídeos.</p>
+          </div>
+          <div class="tabs" id="div_abas" role="tablist">
+            <button
+              class="tab"
+              role="tab"
+              id="aba_ballet"
+              onclick="trocarEstilo('ballet')"
+              aria-selected="true"
+            >
+              Ballet clássico
+            </button>
+            <button
+              class="tab"
+              role="tab"
+              id="aba_hiphop"
+              onclick="trocarEstilo('hiphop')"
+              aria-selected="false"
+            >
+              Hip-hop e urbanas
+            </button>
+            <button
+              class="tab"
+              role="tab"
+              id="aba_contemporaneo"
+              onclick="trocarEstilo('contemporaneo')"
+              aria-selected="false"
+            >
+              Contemporâneo
+            </button>
+            <button
+              class="tab"
+              role="tab"
+              id="aba_kpop"
+              onclick="trocarEstilo('kpop')"
+              aria-selected="false"
+            >
+              K-pop
+            </button>
+            <button
+              class="tab"
+              role="tab"
+              id="aba_outro"
+              onclick="trocarEstilo('outro')"
+              aria-selected="false"
+            >
+              Outro
+            </button>
+          </div>
+
+          <!-- ===== VÍDEOS: Ballet clássico ===== -->
+          <div class="vgrid" id="videos_ballet">
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="https://youtu.be/ZBf2ZDobkjg?si=JzYdT-8pLmappfRq" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="./img/img1.png" alt="Capa do vídeo: Postura e alinhamento em 5 minutos" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Postura e alinhamento em 5 minutos</strong>
+                <small>Iniciante · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(1)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Primeiros passos na barra" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Primeiros passos na barra</strong>
+                <small>Iniciante · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(2)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Port de bras para iniciantes" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Port de bras para iniciantes</strong>
+                <small>Básico · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(3)">
+                Marcar como assistido
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== VÍDEOS: Hip-hop e urbanas ===== -->
+          <div class="vgrid" id="videos_hiphop" hidden>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Fundamentos: bounce e rock" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Fundamentos: bounce e rock</strong>
+                <small>Iniciante · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(4)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Isolações de peito e quadril" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Isolações de peito e quadril</strong>
+                <small>Básico · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(5)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Freestyle sem medo" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Freestyle sem medo</strong>
+                <small>Todos os níveis · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(6)">
+                Marcar como assistido
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== VÍDEOS: Contemporâneo ===== -->
+          <div class="vgrid" id="videos_contemporaneo" hidden>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Respiração e peso" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Respiração e peso</strong>
+                <small>Iniciante · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(7)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Trabalho de chão básico" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Trabalho de chão básico</strong>
+                <small>Básico · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(8)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Fluxo e improviso" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Fluxo e improviso</strong>
+                <small>Todos os níveis · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(9)">
+                Marcar como assistido
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== VÍDEOS: K-pop ===== -->
+          <div class="vgrid" id="videos_kpop" hidden>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Aquecimento para coreografias" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Aquecimento para coreografias</strong>
+                <small>Iniciante · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(10)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Contagem e precisão" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Contagem e precisão</strong>
+                <small>Básico · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(11)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Aprenda uma coreografia em 4 passos" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Aprenda uma coreografia em 4 passos</strong>
+                <small>Todos os níveis · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(12)">
+                Marcar como assistido
+              </button>
+            </div>
+          </div>
+
+          <!-- ===== VÍDEOS: Outro ===== -->
+          <div class="vgrid" id="videos_outro" hidden>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Aquecimento geral para dançar" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Aquecimento geral para dançar</strong>
+                <small>Iniciante · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(13)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Consciência corporal" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Consciência corporal</strong>
+                <small>Básico · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(14)">
+                Marcar como assistido
+              </button>
+            </div>
+            <div class="vcard">
+              <!-- href = link do vídeo no YouTube | src = imagem da capa (caminho em img/ ou link) -->
+              <a class="vid" href="" target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img src="" alt="Capa do vídeo: Criando seus primeiros movimentos" />
+                  <span class="play" aria-hidden="true">&#9654;</span>
+                </div>
+                <strong>Criando seus primeiros movimentos</strong>
+                <small>Todos os níveis · Assistir no YouTube</small>
+              </a>
+              <button class="ok" onclick="marcarAssistido(15)">
+                Marcar como assistido
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- CHAMADA FINAL -->
+      <div class="final">
+        <h2>Descubra a sua própria linha</h2>
+        <p>
+          Crie sua conta, conte o que a dança é para você e veja o seu movimento
+          entrar no mapa da comunidade.
+        </p>
+        <a class="pill solid" href="cadastro.html">Criar minha conta</a>
+      </div>
+
+      <!-- RODAPÉ (estilo em css/base.css) -->
+      <footer>
+        <span>© 2026 Chumseon Space</span
+        ><span>Projeto Individual SPTech</span>
+      </footer>
+    </main>
+
+    <div class="toast" id="div_aviso" role="status"></div>
+
+    <!-- JS (a ordem importa): dados.js -> app.js -> arquivo da página (que chama iniciarPagina no final) -->
+    <script src="js/dados.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/home.js"></script>
+  </body>
 </html>

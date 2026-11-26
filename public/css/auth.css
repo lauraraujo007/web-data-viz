@@ -1,0 +1,71 @@
+/* ==========================================================================
+   auth.css  |  estilos SÓ de cadastro.html e login.html
+   Depende de css/base.css (.panel, .chips, .err, .hint, .pill ficam lá)
+   Ligações com o HTML:
+     .auth ........... <div class="auth"> (duas colunas: texto à esquerda, formulário à direita)
+     .ko ............. o 춤선 grande em contorno
+     label.f / .f input ... cada campo de texto do formulário
+   ========================================================================== */
+.auth {
+  max-width: 1200px;
+  margin: 0px auto 0;
+  padding: auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 50px;
+  align-items: center;
+  min-height: 70svh;
+}
+
+.auth .ko {
+  font: 700 clamp(110px, 100vw, 150px)/1 var(--k);
+  color: transparent;
+  padding: 10px;
+  -webkit-text-stroke: 1.6px var(--accent);
+}
+
+.auth h1 {
+  font: italic 800 clamp(28px, 4vw, 42px)/1.1 var(--f);
+  margin: auto;
+  color: var(--hi);
+}
+
+
+
+label.f {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--hi);
+}
+
+.f input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--hi);
+  font: 400 15px var(--f);
+  transition: border-color 0.2s;
+}
+
+.f input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .auth {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .auth .ko {
+    font-size: 120px;
+  }
+}
